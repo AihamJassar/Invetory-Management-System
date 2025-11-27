@@ -8,13 +8,19 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Invetory_Management_System
+namespace Invetory_Management_System.Forms
 {
-    public partial class Form1 : Form
+    public partial class ReportsForm : Form
     {
-        public Form1()
+        public ReportsForm()
         {
             InitializeComponent();
         }
+
+        private void btnExport_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Export Report logic here!");
+        }
+
     }
 }
