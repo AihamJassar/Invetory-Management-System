@@ -1,5 +1,5 @@
 ﻿using Invetory_Management_System.Models;
-//using Invetory_Management_System.Services
+using Invetory_Management_System.Services;
 using System;
 using System.Windows.Forms;
 
@@ -10,10 +10,17 @@ namespace Invetory_Management_System.Forms
         private UserService userService = new UserService();
         public LoginForm()
         {
-            InitializeComponent();
+            try
+            {
+                InitializeComponent();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error inside LoginForm: " + ex.Message);
+            }
         }
 
-        private void btnLogin_Click(object sender, EventArgs e)
+        private void BtnLogin_Click(object sender, EventArgs e)
         {
             string username = txtUsername.Text.Trim();
             string password = txtPassword.Text.Trim();
@@ -38,24 +45,6 @@ namespace Invetory_Management_System.Forms
             }
         }
 
-        private void btnExit_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
 
-        private void LoginForm_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void LoginForm_Load_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void pictureBoxLogo_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }

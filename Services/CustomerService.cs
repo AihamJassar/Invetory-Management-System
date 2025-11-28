@@ -1,48 +1,57 @@
 ﻿using Invetory_Management_System.Models;
-using System;
+using MySql.Data.MySqlClient;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 
-namespace SmartInventorySystem.Services
+namespace Invetory_Management_System.Services
 {
     public class CustomerService
     {
-        private string connectionString = @"Server=.;Database=InventoryDB;Trusted_Connection=True;";
+        private readonly Database _db;
+
+        public CustomerService()
+        {
+            _db = new Database();
+        }
 
         public void Add(Customer customer)
         {
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (MySqlConnection conn = _db.GetConnection())
             {
                 conn.Open();
-                SqlCommand cmd = new SqlCommand(
-                    "INSERT INTO Customers (Name, Contact) VALUES (@n,@c)", conn);
+                MySqlCommand cmd = new MySqlCommand(
+                    "INSERT INTO customers (name, contact) VALUES (@n, @c)", conn);
+
                 cmd.Parameters.AddWithValue("@n", customer.Name);
                 cmd.Parameters.AddWithValue("@c", customer.Contact);
+
                 cmd.ExecuteNonQuery();
             }
         }
 
         public void Update(Customer customer)
         {
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (MySqlConnection conn = _db.GetConnection())
             {
                 conn.Open();
-                SqlCommand cmd = new SqlCommand(
-                    "UPDATE Customers SET Name=@n, Contact=@c WHERE Id=@id", conn);
+                MySqlCommand cmd = new MySqlCommand(
+                    "UPDATE customers SET name=@n, contact=@c WHERE id=@id", conn);
+
                 cmd.Parameters.AddWithValue("@n", customer.Name);
                 cmd.Parameters.AddWithValue("@c", customer.Contact);
                 cmd.Parameters.AddWithValue("@id", customer.Id);
+
                 cmd.ExecuteNonQuery();
             }
         }
 
         public void Delete(int id)
         {
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (MySqlConnection conn = _db.GetConnection())
             {
                 conn.Open();
-                SqlCommand cmd = new SqlCommand(
-                    "DELETE FROM Customers WHERE Id=@id", conn);
+                MySqlCommand cmd = new MySqlCommand(
+                    "DELETE FROM customers WHERE id=@id", conn);
+
                 cmd.Parameters.AddWithValue("@id", id);
                 cmd.ExecuteNonQuery();
             }
@@ -51,21 +60,24 @@ namespace SmartInventorySystem.Services
         public List<Customer> GetAll()
         {
             List<Customer> list = new List<Customer>();
-            using (SqlConnection conn = new SqlConnection(connectionString))
+
+            using (MySqlConnection conn = _db.GetConnection())
             {
                 conn.Open();
-                SqlCommand cmd = new SqlCommand("SELECT * FROM Customers", conn);
-                SqlDataReader reader = cmd.ExecuteReader();
+                MySqlCommand cmd = new MySqlCommand("SELECT * FROM customers", conn);
+                MySqlDataReader reader = cmd.ExecuteReader();
+
                 while (reader.Read())
                 {
                     list.Add(new Customer
                     {
-                        Id = (int)reader["Id"],
-                        Name = (string)reader["Name"],
-                        Contact = (string)reader["Contact"]
+                        Id = reader.GetInt32("id"),
+                        Name = reader.GetString("name"),
+                        Contact = reader.GetString("contact")
                     });
                 }
             }
+
             return list;
         }
     }

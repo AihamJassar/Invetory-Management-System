@@ -1,71 +1,97 @@
 ﻿using Invetory_Management_System.Models;
+using MySql.Data.MySqlClient;
 using System;
-using System.Data.SqlClient;
 using System.Security.Cryptography;
 using System.Text;
 
-public class UserService
+namespace Invetory_Management_System.Services
 {
-    private string connectionString = "Server=.;Database=InventoryDB;Trusted_Connection=True;";
-
-    public bool Register(string username, string password, string role)
+    public class UserService
     {
-        if (GetUser(username) != null) return false;
+        private readonly Database _db;
 
-        string hashed = HashPassword(password);
-        using (SqlConnection conn = new SqlConnection(connectionString))
+        public UserService()
         {
-            conn.Open();
-            SqlCommand cmd = new SqlCommand("INSERT INTO Users (Username, PasswordHash, Role) VALUES (@u,@p,@r)", conn);
-            cmd.Parameters.AddWithValue("@u", username);
-            cmd.Parameters.AddWithValue("@p", hashed);
-            cmd.Parameters.AddWithValue("@r", role);
-            cmd.ExecuteNonQuery();
+            _db = new Database();
         }
-        return true;
-    }
 
-    public User Login(string username, string password)
-    {
-        var user = GetUser(username);
-        if (user != null && VerifyPassword(password, user.PasswordHash))
-            return user;
-        return null;
-    }
-
-    private User GetUser(string username)
-    {
-        using (SqlConnection conn = new SqlConnection(connectionString))
+        public bool Register(string username, string password, string role)
         {
-            conn.Open();
-            SqlCommand cmd = new SqlCommand("SELECT * FROM Users WHERE Username=@u", conn);
-            cmd.Parameters.AddWithValue("@u", username);
-            SqlDataReader reader = cmd.ExecuteReader();
-            if (reader.Read())
+            // Check if user already exists
+            if (GetUser(username) != null)
+                return false;
+
+            string hashed = HashPassword(password);
+
+            using (MySqlConnection conn = _db.GetConnection())
             {
-                return new User
+                conn.Open();
+
+                string query = "INSERT INTO users (username, password_hash, role) VALUES (@u, @p, @r)";
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                cmd.Parameters.AddWithValue("@u", username);
+                cmd.Parameters.AddWithValue("@p", hashed);
+                cmd.Parameters.AddWithValue("@r", role);
+
+                cmd.ExecuteNonQuery();
+            }
+
+            return true;
+        }
+
+        public User Login(string username, string password)
+        {
+            var user = GetUser(username);
+
+            if (user != null && VerifyPassword(password, user.PasswordHash))
+                return user;
+
+            return null;
+        }
+
+        private User GetUser(string username)
+        {
+            User user = null;
+
+            using (MySqlConnection conn = _db.GetConnection())
+            {
+                conn.Open();
+
+                string query = "SELECT * FROM users WHERE username=@u LIMIT 1";
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                cmd.Parameters.AddWithValue("@u", username);
+
+                MySqlDataReader reader = cmd.ExecuteReader();
+
+                if (reader.Read())
                 {
-                    Id = (int)reader["Id"],
-                    Username = (string)reader["Username"],
-                    PasswordHash = (string)reader["PasswordHash"],
-                    Role = (string)reader["Role"]
-                };
+                    user = new User
+                    {
+                        Id = reader.GetInt32("id"),
+                        Username = reader.GetString("username"),
+                        PasswordHash = reader.GetString("password_hash"),
+                        Role = reader.GetString("role")
+                    };
+                }
+            }
+
+            return user;
+        }
+
+        private string HashPassword(string password)
+        {
+            using (SHA256 sha = SHA256.Create())
+            {
+                byte[] bytes = sha.ComputeHash(Encoding.UTF8.GetBytes(password));
+                return Convert.ToBase64String(bytes);
             }
         }
-        return null;
-    }
 
-    private string HashPassword(string password)
-    {
-        using (SHA256 sha = SHA256.Create())
+        private bool VerifyPassword(string password, string hash)
         {
-            byte[] bytes = sha.ComputeHash(Encoding.UTF8.GetBytes(password));
-            return Convert.ToBase64String(bytes);
+            return HashPassword(password) == hash;
         }
-    }
-
-    private bool VerifyPassword(string password, string hash)
-    {
-        return HashPassword(password) == hash;
     }
 }

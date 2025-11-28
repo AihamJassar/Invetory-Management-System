@@ -23,7 +23,7 @@ namespace Invetory_Management_System.Forms
             // إخفاء أزرار حسب الدور
             if (loggedUser.Role.ToLower() != "admin")
             {
-                btnUsers.Enabled = false; // مثال
+                //btnUsers.Enabled = false; // مثال
             }
         }
 
@@ -56,6 +56,11 @@ namespace Invetory_Management_System.Forms
         private void btnLogout_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

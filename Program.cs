@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Invetory_Management_System.Forms;
+using System;
 using System.Windows.Forms;
-using Invetory_Management_System.Forms;
 
 namespace Invetory_Management_System
 {
@@ -17,7 +14,7 @@ namespace Invetory_Management_System
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Forms.LoginForm());
+            Application.Run(new LoginForm());
         }
     }
 }
