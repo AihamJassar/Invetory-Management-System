@@ -1,5 +1,6 @@
 ﻿using Invetory_Management_System.Models;
 using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 
 namespace Invetory_Management_System.Services
@@ -13,7 +14,7 @@ namespace Invetory_Management_System.Services
             _db = new Database();
         }
 
-        public void Add(Product product)
+        public Product Add(Product product)
         {
             using (MySqlConnection conn = _db.GetConnection())
             {
@@ -27,6 +28,10 @@ namespace Invetory_Management_System.Services
                 cmd.Parameters.AddWithValue("@p", product.Price);
 
                 cmd.ExecuteNonQuery();
+
+                product.Id = product.Id = (int)cmd.LastInsertedId;
+
+                return product ;
             }
         }
 

@@ -18,49 +18,51 @@ namespace Invetory_Management_System.Forms
         {
             InitializeComponent();
             loggedUser = user;
-            lblWelcome.Text = $"Welcome, {loggedUser.Username} ({loggedUser.Role})";
 
             // إخفاء أزرار حسب الدور
             if (loggedUser.Role.ToLower() != "admin")
             {
-                //btnUsers.Enabled = false; // مثال
+                btnUsers.Enabled = false;
             }
         }
 
 
-
-        private void btnProducts_Click(object sender, EventArgs e)
+        private void BtnProducts_Click(object sender, EventArgs e)
         {
             ProductsForm pf = new ProductsForm();
             pf.ShowDialog();
         }
-
-        private void btnSuppliers_Click(object sender, EventArgs e)
+        private void BtnUsers_Click(object sender, EventArgs e)
         {
-            SuppliersForm sf = new SuppliersForm();
-            sf.ShowDialog();
+            UsersForm pf = new UsersForm();
+            pf.ShowDialog();
         }
-
-        private void btnCustomers_Click(object sender, EventArgs e)
+        private void BtnCustomers_Click(object sender, EventArgs e)
         {
             CustomersForm cf = new CustomersForm();
             cf.ShowDialog();
         }
-
-        private void btnReports_Click(object sender, EventArgs e)
+        private void BtnSuppliers_Click(object sender, EventArgs e)
+        {
+            SuppliersForm sf = new SuppliersForm();
+            sf.ShowDialog();
+        }
+        private void BtnInvoices_Click(object sender, EventArgs e)
+        {
+            InvoicesForm fr = new InvoicesForm();
+            fr.ShowDialog();
+        }
+        private void BtnReports_Click(object sender, EventArgs e)
         {
             ReportsForm rf = new ReportsForm();
             rf.ShowDialog();
         }
-
-        private void btnLogout_Click(object sender, EventArgs e)
+        private void BtnLogout_Click(object sender, EventArgs e)
         {
             this.Close();
+            LoginForm fr = new LoginForm();
+            fr.ShowDialog();
         }
 
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-
-        }
     }
 }

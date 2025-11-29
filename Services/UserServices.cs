@@ -1,6 +1,7 @@
 ﻿using Invetory_Management_System.Models;
 using MySql.Data.MySqlClient;
 using System;
+using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -15,14 +16,14 @@ namespace Invetory_Management_System.Services
             _db = new Database();
         }
 
-        public bool Register(string username, string password, string role)
+        public User Register(string username, string password, string role)
         {
             // Check if user already exists
             if (GetUser(username) != null)
-                return false;
+                return null;
 
             string hashed = HashPassword(password);
-
+            int id;
             using (MySqlConnection conn = _db.GetConnection())
             {
                 conn.Open();
@@ -35,9 +36,16 @@ namespace Invetory_Management_System.Services
                 cmd.Parameters.AddWithValue("@r", role);
 
                 cmd.ExecuteNonQuery();
+
+                id  = (int)cmd.LastInsertedId;
             }
 
-            return true;
+            return new User
+            {
+                Id = id,
+                Username= username,
+                Role = role
+            };
         }
 
         public User Login(string username, string password)
@@ -48,6 +56,43 @@ namespace Invetory_Management_System.Services
                 return user;
 
             return null;
+        }
+
+        public void Update(User user)
+        {
+            using (MySqlConnection conn = _db.GetConnection())
+            {
+                conn.Open();
+                string query = "UPDATE users SET username=@un, role=@r WHERE id=@id";
+                if (!string.IsNullOrWhiteSpace(user.PasswordHash))
+                {
+                    query = "UPDATE users SET username=@un, password_hash=@pass, role=@r WHERE id=@id";
+                }
+                    MySqlCommand cmd = new MySqlCommand(
+                    query, conn);
+
+                cmd.Parameters.AddWithValue("@un", user.Username);
+                if(!string.IsNullOrWhiteSpace(user.PasswordHash))
+                cmd.Parameters.AddWithValue("@pass", HashPassword(user.PasswordHash));
+                cmd.Parameters.AddWithValue("@r", user.Role);
+                cmd.Parameters.AddWithValue("@id", user.Id);
+
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public void Delete(int id)
+        {
+            using (MySqlConnection conn = _db.GetConnection())
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(
+                    "DELETE FROM users WHERE id=@id", conn);
+
+                cmd.Parameters.AddWithValue("@id", id);
+
+                cmd.ExecuteNonQuery();
+            }
         }
 
         private User GetUser(string username)
@@ -78,6 +123,30 @@ namespace Invetory_Management_System.Services
             }
 
             return user;
+        }
+
+        public List<User> GetAll()
+        {
+            List<User> list = new List<User>();
+
+            using (MySqlConnection conn = _db.GetConnection())
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("SELECT * FROM users", conn);
+                MySqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    list.Add(new User
+                    {
+                        Id = reader.GetInt32("id"),
+                        Username = reader.GetString("username"),
+                        Role = reader.GetString("role")
+                    });
+                }
+            }
+
+            return list;
         }
 
         private string HashPassword(string password)
