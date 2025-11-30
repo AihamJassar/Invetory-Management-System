@@ -13,20 +13,31 @@ namespace Invetory_Management_System.Services
             _db = new Database();
         }
 
-        public void Add(Supplier supplier)
+        public Supplier Add(Supplier supplier)
         {
+            int id;
             using (MySqlConnection conn = _db.GetConnection())
             {
                 conn.Open();
-
                 MySqlCommand cmd = new MySqlCommand(
-                    "INSERT INTO suppliers (name, contact) VALUES (@n, @c)", conn);
+                    "INSERT INTO suppliers (name, address, phone) VALUES (@n, @a, @p)", conn);
 
                 cmd.Parameters.AddWithValue("@n", supplier.Name);
-                cmd.Parameters.AddWithValue("@c", supplier.Contact);
+                cmd.Parameters.AddWithValue("@a", supplier.Address);
+                cmd.Parameters.AddWithValue("@p", supplier.Phone);
 
                 cmd.ExecuteNonQuery();
+
+                id = (int)cmd.LastInsertedId;
             }
+
+            return new Supplier
+            {
+                Id = id,
+                Name = supplier.Name,
+                Address = supplier.Address,
+                Phone = supplier.Phone,
+            };
         }
 
         public void Update(Supplier supplier)
@@ -34,12 +45,12 @@ namespace Invetory_Management_System.Services
             using (MySqlConnection conn = _db.GetConnection())
             {
                 conn.Open();
-
                 MySqlCommand cmd = new MySqlCommand(
-                    "UPDATE suppliers SET name=@n, contact=@c WHERE id=@id", conn);
+                    "UPDATE suppliers SET name=@n, address=@a, phone=@p WHERE id=@id", conn);
 
                 cmd.Parameters.AddWithValue("@n", supplier.Name);
-                cmd.Parameters.AddWithValue("@c", supplier.Contact);
+                cmd.Parameters.AddWithValue("@a", supplier.Address);
+                cmd.Parameters.AddWithValue("@p", supplier.Phone);
                 cmd.Parameters.AddWithValue("@id", supplier.Id);
 
                 cmd.ExecuteNonQuery();
@@ -51,12 +62,10 @@ namespace Invetory_Management_System.Services
             using (MySqlConnection conn = _db.GetConnection())
             {
                 conn.Open();
-
                 MySqlCommand cmd = new MySqlCommand(
                     "DELETE FROM suppliers WHERE id=@id", conn);
 
                 cmd.Parameters.AddWithValue("@id", id);
-
                 cmd.ExecuteNonQuery();
             }
         }
@@ -68,7 +77,6 @@ namespace Invetory_Management_System.Services
             using (MySqlConnection conn = _db.GetConnection())
             {
                 conn.Open();
-
                 MySqlCommand cmd = new MySqlCommand("SELECT * FROM suppliers", conn);
                 MySqlDataReader reader = cmd.ExecuteReader();
 
@@ -78,7 +86,8 @@ namespace Invetory_Management_System.Services
                     {
                         Id = reader.GetInt32("id"),
                         Name = reader.GetString("name"),
-                        Contact = reader.GetString("contact")
+                        Address = reader.GetString("address"),
+                        Phone = reader.GetString("phone")
                     });
                 }
             }

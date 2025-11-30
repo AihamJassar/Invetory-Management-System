@@ -26,14 +26,15 @@ INSERT INTO users (username, password_hash, role) VALUES
 CREATE TABLE IF NOT EXISTS customers (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
-    contact VARCHAR(100),
+    address VARCHAR(100),
+    phone VARCHAR(20),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- بيانات تجريبية للعملاء
-INSERT INTO customers (name, contact) VALUES
-('Ali Ahmed', 'ali@example.com'),
-('Sara Mohammed', 'sara@example.com');
+INSERT INTO customers (name, addres, phone) VALUES
+('A', 'suppliera@example.com', '477897'),
+('B', 'supplierb@example.com', '898797087');
 
 -- ==========================================
 -- جدول الموردين: suppliers
@@ -41,14 +42,15 @@ INSERT INTO customers (name, contact) VALUES
 CREATE TABLE IF NOT EXISTS suppliers (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
-    contact VARCHAR(100),
+    address VARCHAR(100),
+    phone VARCHAR(20),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- بيانات تجريبية للموردين
-INSERT INTO suppliers (name, contact) VALUES
-('Supplier A', 'suppliera@example.com'),
-('Supplier B', 'supplierb@example.com');
+INSERT INTO suppliers (name, addres, phone) VALUES
+('Supplier A', 'suppliera@example.com', '477897'),
+('Supplier B', 'supplierb@example.com', '898797087');
 
 -- ==========================================
 -- جدول المنتجات: products

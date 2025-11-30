@@ -13,19 +13,31 @@ namespace Invetory_Management_System.Services
             _db = new Database();
         }
 
-        public void Add(Customer customer)
+        public Customer Add(Customer customer)
         {
+            int id;
             using (MySqlConnection conn = _db.GetConnection())
             {
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand(
-                    "INSERT INTO customers (name, contact) VALUES (@n, @c)", conn);
+                    "INSERT INTO customers (name, address, phone) VALUES (@n, @a, @p)", conn);
 
                 cmd.Parameters.AddWithValue("@n", customer.Name);
-                cmd.Parameters.AddWithValue("@c", customer.Contact);
+                cmd.Parameters.AddWithValue("@a", customer.Address);
+                cmd.Parameters.AddWithValue("@p", customer.Phone);
 
                 cmd.ExecuteNonQuery();
+
+                id = (int)cmd.LastInsertedId;
             }
+
+            return new Customer
+            {
+                Id = id,
+                Name = customer.Name,
+                Address = customer.Address,
+                Phone = customer.Phone,
+            };
         }
 
         public void Update(Customer customer)
@@ -34,10 +46,11 @@ namespace Invetory_Management_System.Services
             {
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand(
-                    "UPDATE customers SET name=@n, contact=@c WHERE id=@id", conn);
+                    "UPDATE customers SET name=@n, address=@a, phone=@p WHERE id=@id", conn);
 
                 cmd.Parameters.AddWithValue("@n", customer.Name);
-                cmd.Parameters.AddWithValue("@c", customer.Contact);
+                cmd.Parameters.AddWithValue("@a", customer.Address);
+                cmd.Parameters.AddWithValue("@p", customer.Phone);
                 cmd.Parameters.AddWithValue("@id", customer.Id);
 
                 cmd.ExecuteNonQuery();
@@ -73,7 +86,8 @@ namespace Invetory_Management_System.Services
                     {
                         Id = reader.GetInt32("id"),
                         Name = reader.GetString("name"),
-                        Contact = reader.GetString("contact")
+                        Address = reader.GetString("address"),
+                        Phone = reader.GetString("phone")
                     });
                 }
             }

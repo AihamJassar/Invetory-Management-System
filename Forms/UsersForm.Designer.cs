@@ -228,7 +228,7 @@
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnEidte);
             this.Name = "UsersForm";
-            this.Text = "L";
+            this.Text = "إدارة المستخدمن";
             this.Load += new System.EventHandler(this.UsersForm_Load);
             this.pnlHeader.ResumeLayout(false);
             this.pnlHeader.PerformLayout();
