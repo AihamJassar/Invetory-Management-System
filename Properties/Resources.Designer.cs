@@ -59,15 +59,5 @@ namespace Invetory_Management_System.Properties {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Aiham_Logo_with_Developer_Icons {
-            get {
-                object obj = ResourceManager.GetObject("Aiham Logo with Developer Icons", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
     }
 }

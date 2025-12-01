@@ -153,7 +153,7 @@ namespace Invetory_Management_System.Forms
             this.lblHeader.Name = "lblHeader";
             this.lblHeader.Size = new System.Drawing.Size(341, 45);
             this.lblHeader.TabIndex = 4;
-            this.lblHeader.Text = " إدارة المستخدمين";
+            this.lblHeader.Text = " إدارة الموردين";
             // 
             // btnExit
             // 

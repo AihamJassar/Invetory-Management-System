@@ -41,8 +41,6 @@ namespace Invetory_Management_System.Forms
             this.btnCustomers = new System.Windows.Forms.Button();
             this.btnSuppliers = new System.Windows.Forms.Button();
             this.btnLogout = new System.Windows.Forms.Button();
-            this.btnReports = new System.Windows.Forms.Button();
-            this.btnInvoices = new System.Windows.Forms.Button();
             this.pnlHeader.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -71,7 +69,7 @@ namespace Invetory_Management_System.Forms
             this.btnProducts.BackColor = System.Drawing.Color.MidnightBlue;
             this.btnProducts.Font = new System.Drawing.Font("Tahoma", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnProducts.ForeColor = System.Drawing.Color.White;
-            this.btnProducts.Location = new System.Drawing.Point(418, 119);
+            this.btnProducts.Location = new System.Drawing.Point(418, 158);
             this.btnProducts.Name = "btnProducts";
             this.btnProducts.Size = new System.Drawing.Size(598, 79);
             this.btnProducts.TabIndex = 0;
@@ -84,7 +82,7 @@ namespace Invetory_Management_System.Forms
             this.btnUsers.BackColor = System.Drawing.Color.MidnightBlue;
             this.btnUsers.Font = new System.Drawing.Font("Tahoma", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnUsers.ForeColor = System.Drawing.Color.White;
-            this.btnUsers.Location = new System.Drawing.Point(418, 204);
+            this.btnUsers.Location = new System.Drawing.Point(418, 256);
             this.btnUsers.Name = "btnUsers";
             this.btnUsers.Size = new System.Drawing.Size(598, 77);
             this.btnUsers.TabIndex = 1;
@@ -97,7 +95,7 @@ namespace Invetory_Management_System.Forms
             this.btnCustomers.BackColor = System.Drawing.Color.MidnightBlue;
             this.btnCustomers.Font = new System.Drawing.Font("Tahoma", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCustomers.ForeColor = System.Drawing.Color.White;
-            this.btnCustomers.Location = new System.Drawing.Point(418, 287);
+            this.btnCustomers.Location = new System.Drawing.Point(418, 353);
             this.btnCustomers.Name = "btnCustomers";
             this.btnCustomers.Size = new System.Drawing.Size(598, 78);
             this.btnCustomers.TabIndex = 2;
@@ -110,7 +108,7 @@ namespace Invetory_Management_System.Forms
             this.btnSuppliers.BackColor = System.Drawing.Color.MidnightBlue;
             this.btnSuppliers.Font = new System.Drawing.Font("Tahoma", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSuppliers.ForeColor = System.Drawing.Color.White;
-            this.btnSuppliers.Location = new System.Drawing.Point(418, 371);
+            this.btnSuppliers.Location = new System.Drawing.Point(418, 452);
             this.btnSuppliers.Name = "btnSuppliers";
             this.btnSuppliers.Size = new System.Drawing.Size(598, 80);
             this.btnSuppliers.TabIndex = 4;
@@ -123,7 +121,7 @@ namespace Invetory_Management_System.Forms
             this.btnLogout.BackColor = System.Drawing.Color.MidnightBlue;
             this.btnLogout.Font = new System.Drawing.Font("Tahoma", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnLogout.ForeColor = System.Drawing.Color.White;
-            this.btnLogout.Location = new System.Drawing.Point(418, 628);
+            this.btnLogout.Location = new System.Drawing.Point(418, 553);
             this.btnLogout.Name = "btnLogout";
             this.btnLogout.Size = new System.Drawing.Size(598, 86);
             this.btnLogout.TabIndex = 5;
@@ -131,40 +129,12 @@ namespace Invetory_Management_System.Forms
             this.btnLogout.UseVisualStyleBackColor = false;
             this.btnLogout.Click += new System.EventHandler(this.BtnLogout_Click);
             // 
-            // btnReports
-            // 
-            this.btnReports.BackColor = System.Drawing.Color.MidnightBlue;
-            this.btnReports.Font = new System.Drawing.Font("Tahoma", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnReports.ForeColor = System.Drawing.Color.White;
-            this.btnReports.Location = new System.Drawing.Point(418, 543);
-            this.btnReports.Name = "btnReports";
-            this.btnReports.Size = new System.Drawing.Size(598, 79);
-            this.btnReports.TabIndex = 6;
-            this.btnReports.Text = "التقارير";
-            this.btnReports.UseVisualStyleBackColor = false;
-            this.btnReports.Click += new System.EventHandler(this.BtnReports_Click);
-            // 
-            // btnInvoices
-            // 
-            this.btnInvoices.BackColor = System.Drawing.Color.MidnightBlue;
-            this.btnInvoices.Font = new System.Drawing.Font("Tahoma", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnInvoices.ForeColor = System.Drawing.Color.White;
-            this.btnInvoices.Location = new System.Drawing.Point(418, 457);
-            this.btnInvoices.Name = "btnInvoices";
-            this.btnInvoices.Size = new System.Drawing.Size(598, 80);
-            this.btnInvoices.TabIndex = 7;
-            this.btnInvoices.Text = "الفواتير";
-            this.btnInvoices.UseVisualStyleBackColor = false;
-            this.btnInvoices.Click += new System.EventHandler(this.BtnInvoices_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.AliceBlue;
             this.ClientSize = new System.Drawing.Size(1424, 760);
-            this.Controls.Add(this.btnInvoices);
-            this.Controls.Add(this.btnReports);
             this.Controls.Add(this.btnLogout);
             this.Controls.Add(this.btnSuppliers);
             this.Controls.Add(this.pnlHeader);
@@ -186,8 +156,6 @@ namespace Invetory_Management_System.Forms
         private System.Windows.Forms.Button btnUsers;
         private System.Windows.Forms.Button btnCustomers;
         private System.Windows.Forms.Button btnSuppliers;
-        private System.Windows.Forms.Button btnInvoices;
-        private System.Windows.Forms.Button btnReports;
         private System.Windows.Forms.Button btnLogout;
     }
 }
