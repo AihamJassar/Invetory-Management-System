@@ -45,6 +45,9 @@ namespace Invetory_Management_System.Forms
             }
         }
 
+        private void LoginForm_Load(object sender, EventArgs e)
+        {
 
+        }
     }
 }

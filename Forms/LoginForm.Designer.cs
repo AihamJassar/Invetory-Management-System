@@ -150,6 +150,7 @@ namespace Invetory_Management_System.Forms
             this.Controls.Add(this.lblUsername);
             this.Name = "LoginForm";
             this.Text = "تسجيل الدخول";
+            this.Load += new System.EventHandler(this.LoginForm_Load);
             this.pnlHeader.ResumeLayout(false);
             this.pnlHeader.PerformLayout();
             this.ResumeLayout(false);

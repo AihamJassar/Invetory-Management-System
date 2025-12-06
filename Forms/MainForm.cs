@@ -1,12 +1,5 @@
 ﻿using Invetory_Management_System.Models;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Invetory_Management_System.Forms
@@ -47,16 +40,6 @@ namespace Invetory_Management_System.Forms
             SuppliersForm sf = new SuppliersForm();
             sf.ShowDialog();
         }
-        private void BtnInvoices_Click(object sender, EventArgs e)
-        {
-            InvoicesForm fr = new InvoicesForm();
-            fr.ShowDialog();
-        }
-        private void BtnReports_Click(object sender, EventArgs e)
-        {
-            ReportsForm rf = new ReportsForm();
-            rf.ShowDialog();
-        }
         private void BtnLogout_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -64,5 +47,9 @@ namespace Invetory_Management_System.Forms
             fr.ShowDialog();
         }
 
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

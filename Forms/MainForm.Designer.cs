@@ -143,6 +143,7 @@ namespace Invetory_Management_System.Forms
             this.Controls.Add(this.btnProducts);
             this.Name = "MainForm";
             this.Text = "الرئيسية";
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.pnlHeader.ResumeLayout(false);
             this.pnlHeader.PerformLayout();
             this.ResumeLayout(false);
